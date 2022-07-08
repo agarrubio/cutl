@@ -2,7 +2,7 @@
 cut lines from file
 
 ## Motivation
-There is no GNU tool specically designed to extract lines from file by number. I find **sed** too complicated for this simple task. On the other end, **head** and **tail** are not versatile enough. **cutl** is written in **Perl** and takes many ideas from it (I.E. negative numbers count from the end of file, elipsis '`..`' create ranges, etc). **cutl** follows the **UNIX** phylosophy or doing one thing, and doing it well. **cutl** isn't superfast, but tries to be fast enough, even with big files.
+There is no GNU tool specifically designed to extract lines from file by number. I find **sed** too complicated for this simple task. On the other end, **head** and **tail** are not versatile enough. **cutl** is written in **Perl** and takes many ideas from it (I.E. negative numbers count from the end of file, ellipsis '`..`' create ranges, etc). **cutl** follows the **UNIX** philosophy or doing one thing, and doing it well. **cutl** isn't superfast, but tries to be fast enough, even with big files.
 
 ## Installation
 Just move the script cut_lines.pl somewhere in your path (maybe $HOME/bin), and add an alias to your '.bashrc'
@@ -24,7 +24,7 @@ Give list in a file with `-f`:
 %> cat mylist.txt
 6,11 9..12
 6 8
-%> seq 1 15 | cutl -f mylist.txt      # print lines 6,11, range 9 to 12, lines 6, 8
+%> seq 1 15 | cutl -f mylist.txt      # print lines 6, 11, range 9 to 12, lines 6, 8
 ```
 ## Bugs
 I would be grateful if you tell me of any bugs or suggestions by raising an Issue.
