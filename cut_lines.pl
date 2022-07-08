@@ -20,9 +20,11 @@ close_ranges();  # Clean list and closes open ranges
 # If any succedes, it won't return: the script will finish.
 try_upto();      # Behaves like head. Prints up to a line. -l..3 is like "head -4"
 try_from();      # Behaves like tail -n+x. Prints from a line on. -l3.. is like "tail -n +4"
-try_quick();     # Takes care of simple cases (increasing line numbers, no negatives, no open ranges, no -v).
+try_quick();     # Takes care of simple case (if line numbers increase, there are no negative 
+                 # line numbers, nor open ranges, and no -v).
 
-set_ln();        # Sets $ln (the number of lines in the file). If @ARGV is empty, saves STDIN data in a file ($tmp), which becomes $ARGV[0]
+set_ln();        # Sets $ln (the number of lines in the file). If @ARGV is empty, saves STDIN 
+                 # data in a file ($tmp), which becomes $ARGV[0]
 parse_list();    # Converts negatives to positives. Sets $is_sorted, $min_line, $max_line
 
 if( ! $is_sorted ){
