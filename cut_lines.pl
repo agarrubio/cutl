@@ -282,7 +282,7 @@ cut lines from file as specified in list.
                ',..3' => ',0..3' and  '5..,' => '5..-1,'
              Thus -l..4 is like "head -5" and -l-4.. is like "tail -n4"
 -v         Negate the list. Report lines NOT in list.
-             Requires line numbers to be in ascending order.
+             Requires line numbers to be in strict ascending order.
 -f  file   Read list from file (comma separated list of numbers)
              Whitespace (including newlines) are treated as commas.
 -b         Print some debugging information
