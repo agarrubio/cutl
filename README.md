@@ -19,7 +19,7 @@ Negate the list with `-v`:
 ```
 %> seq 1 15 | cutl -v -l..3,8,11      # print all lines except range 0 to 3, and lines 8 and 11
 ```
-List can be taken from a file:
+Give list in a file with `-f`:
 ```
 %> cat mylist.txt
 6,11 9..12
