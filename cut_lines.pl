@@ -287,13 +287,14 @@ cut lines from file as specified in list.
              Whitespace (including newlines) are treated as commas.
 -b         Print some debugging information
 
-Note: 
-Tipically, lines are read into an array. For very large files, this
-  can be slow and consume much RAM.
-However, reading into array is avoided when these conditions are met:
-  1) list has no negatives numbers, 2) line numbers are ascending, 
-  3) there are no open ranges, 4) the list implies < 100,000 lines (even
-  if the file is huge) and 5) -v is not in place,
+Note on efficiency: 
+Mainly, don't worry: modern computers are very fast!
+However, in the worst case lines are read into an array. For very large
+  files, this can be slow and consume much RAM.
+These conditions might (or not) decrease efficiency:
+  1) list with negatives numbers, 2) unsorted line numbers (that do no 
+  increase in monotonical order), 3) ranges that go to end-of-file, 4) a 
+  list that implies > 100,000 lines, and 5) negation of list with -v
 ayuda
 }
 
