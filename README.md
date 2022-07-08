@@ -21,7 +21,7 @@ Negate the list with `-v`:
 # Extract all lines **except** range 2 to 5, and lines 8 and 11
 %> seq 1 15 | cutl -v -l2..5,8,11      
 ```
-Give list in a file with `-f`:
+Read list from a file with `-f`:
 ```
 %> cat mylist.txt
 6,11 9..12
