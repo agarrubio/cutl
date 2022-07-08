@@ -289,12 +289,12 @@ cut lines from file as specified in list.
 
 Note on efficiency: 
 Mainly, don't worry: modern computers are very fast!
-However, in the worst case lines are read into an array. For very large
+However, in the worst case, lines are read into an array. For very large
   files, this can be slow and consume much RAM.
 These conditions might (or not) decrease efficiency:
   1) list with negatives numbers, 2) unsorted line numbers (that do no 
-  increase in monotonical order), 3) ranges that go to end-of-file, 4) a 
-  list that implies > 100,000 lines, and 5) negation of list with -v
+  increase in monotonical order), 3) ranges that go to end-of-file, 4) 
+  lists that implies > 100,000 lines, and 5) negation of list with -v
 ayuda
 }
 
