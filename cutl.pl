@@ -266,9 +266,9 @@ sub END{
 }
 
 sub help{ 
-print STDERR "lncut.l -n list <file>\n"; 
+print STDERR "cutl -n list <file>\n"; 
 die <<'ayuda'; 
-Extract from file the lines specified in list by number.
+cut lines from file as specified in list.
 
 -h         This help
 -l   list  Comma separated list of numbers.
