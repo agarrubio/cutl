@@ -5,7 +5,7 @@ cut lines from file
 There is no GNU tool specifically designed to extract lines from file by number. I find **sed** too complicated for this simple task. On the other end, **head** and **tail** are not versatile enough. **cutl** is written in **Perl** and takes many ideas from it (I.E. negative numbers count from the end of file, ellipsis '`..`' create ranges, etc). **cutl** follows the **UNIX** philosophy or doing one thing, and doing it well. **cutl** isn't superfast, but tries to be fast enough, even with big files.
 
 ## Installation
-Just move the script cut_lines.pl somewhere in your path (maybe $HOME/bin), and add an alias to your '.bashrc'
+Just move the script cut_lines.pl somewhere in your path (maybe $HOME/bin), and add an alias in your '.bashrc'
 ```
 alias cutl=cut_lines.pl
 ```
