@@ -10,3 +10,14 @@ Just move the script cut_lines.pl somewhere in your path (maybe $HOME/bin), and 
 alias cutl=cut_lines.pl
 ```
 
+## Usage
+**cutl** has a short help (`cutl -h`). This would be a simple use example:
+```
+seq 1 15 | cutl -l..3,8,6,-5..     # print range 0 to 3, lines 8, 6, and range -5 to end (last 5 lines of file).
+```
+Negate the list with `-v`:
+```
+seq 1 15 | cutl -v -l..3,8,11      # print all lines except range 0 to 3, and lines 8 and 11
+```
+List can be take from a file:
+```
