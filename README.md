@@ -32,7 +32,7 @@ Read list from a file with `-f`:
 # Extract lines 6, 11, range 9 to 12, lines 6, 8
 %> seq 1 15 | cutl -f mylist.txt      
 ```
-Sample random lines with `-s`:
+Sample random lines with `-s` (sorted) or `-S` (unsorted):
 ```
 # Extract 20 random lines
 %> seq 1 1000 | cutl -s 20
