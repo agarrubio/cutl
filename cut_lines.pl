@@ -5,13 +5,14 @@ use List::Util qw(min max);
 use Getopt::Std;
 
 my(%opts,$tmp,$ln,$is_sorted,$min_line,$max_line);
-getopts("hbzvl:f:", \%opts) or help();
+getopts("hbzvl:f:s:", \%opts) or help();
 $opts{h} && help();
 if( -t STDIN and not @ARGV) {help()};
 
 # ======================  main =======================
 
 $opts{f}  && read_list(); # fills $opts{l} from file $opts{f};
+$opts{s}  && sample();    # Sample lines. Does not return.
 $opts{l} || help();
 
 close_ranges();  # Clean list and closes open ranges,takes care of $opts{z}
@@ -66,9 +67,18 @@ sub close_ranges{
     
     print STDERR "list is $opts{l}\n" if $opts{b};
 }
+sub sample{
+    set_ln();
+    my @lineno;
+    for(my $i=0; $i< $opts{s}; $i++){
+        push @lineno, int(rand($ln));
+    }
+    $opts{l}= join(',', sort {$a<=>$b} @lineno);
+    try_quick();
+}
 sub one2zero{
     my $val=shift;
-    $val == 0 && die "ERROR: line number == 0 while counting from one (see option -z)\n";
+    $val == 0 && die "ERROR: line number == 0 while counting from one (see option -z).\n";
     return $val -1;
 }
 sub try_upto{
@@ -295,6 +305,7 @@ cut lines from file as specified in list.
 -f  file   Read list from file (comma separated list of numbers)
              Whitespace (including newlines) are treated as commas.
 -z         Count lines from zero. Default is count from 1.
+-s  n      Sample n random lines. Note: Slow with large files
 -b         Print some debugging information
 
 Note on efficiency: 
