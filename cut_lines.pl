@@ -50,7 +50,7 @@ sub close_ranges{
     
     # start counting from one
     unless( $opts{z} ){
-        $opts{l}=~s/(?<![-])(\d+)/$1-1 if $1>0/eg;
+        $opts{l}=~s/(?<![-])(\d+)/one2zero($1)/eg;
     }
     
     # start open ranges
@@ -66,7 +66,11 @@ sub close_ranges{
     
     print STDERR "list is $opts{l}\n" if $opts{b};
 }
-
+sub one2zero{
+    my $val=shift;
+    $val == 0 && die "ERROR: line number == 0 while counting from one (see option -z)\n";
+    return $val -1;
+}
 sub try_upto{
     $opts{l}=~m/^0\.\.(\d+),?$/ or return;
     print STDERR "Using UPTO. $opts{l}\n" if $opts{b};
