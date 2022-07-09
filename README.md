@@ -9,7 +9,10 @@ Just move the script cut_lines.pl somewhere in your path (maybe $HOME/bin), and 
 ```
 alias cutl=cut_lines.pl
 ```
-
+or
+```
+alias cutl="cut_lines.pl -z"  To count lines from zero, instead of one
+```
 ## Usage
 **cutl** has a short help (`cutl -h`). This would be a simple use example:
 ```

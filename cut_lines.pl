@@ -14,7 +14,7 @@ if( -t STDIN and not @ARGV) {help()};
 $opts{f}  && read_list(); # fills $opts{l} from file $opts{f};
 $opts{l} || help();
 
-close_ranges();  # Clean list and closes open ranges
+close_ranges();  # Clean list and closes open ranges,takes care of $opts{z}
 
 # The following 3 subs implement different shortcuts, aplicable to simple cases
 # If any succedes, it won't return: the script will finish.
@@ -290,7 +290,7 @@ cut lines from file as specified in list.
              Requires line numbers to be in strict ascending order.
 -f  file   Read list from file (comma separated list of numbers)
              Whitespace (including newlines) are treated as commas.
--z         Count lines from 1
+-z         Count lines from zero. Default is count from 1.
 -b         Print some debugging information
 
 Note on efficiency: 
