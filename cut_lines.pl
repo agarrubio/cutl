@@ -5,7 +5,7 @@ use List::Util qw(min max);
 use Getopt::Std;
 
 my(%opts,$tmp,$ln,$is_sorted,$min_line,$max_line);
-getopts("hbvl:f:", \%opts) or help();
+getopts("hbzvl:f:", \%opts) or help();
 $opts{h} && help();
 if( -t STDIN and not @ARGV) {help()};
 
@@ -47,6 +47,11 @@ sub close_ranges{
     $opts{l}=~s/,+/,/g;
     # remove repeated '-'
     $opts{l}=~s/\-+/-/g;
+    
+    # start counting from one
+    unless( $opts{z} ){
+        $opts{l}=~s/(?<![-])(\d+)/$1-1 if $1>0/eg;
+    }
     
     # start open ranges
     $opts{l}=~ s{(?<=,)\.\.}{0..}g;
@@ -268,7 +273,7 @@ sub END{
 }
 
 sub help{ 
-print STDERR "cutl -n list <file>\n"; 
+print STDERR "cutl -l list <file>\n"; 
 die <<'ayuda'; 
 cut lines from file as specified in list.
 
@@ -285,6 +290,7 @@ cut lines from file as specified in list.
              Requires line numbers to be in strict ascending order.
 -f  file   Read list from file (comma separated list of numbers)
              Whitespace (including newlines) are treated as commas.
+-z         Count lines from 1
 -b         Print some debugging information
 
 Note on efficiency: 
