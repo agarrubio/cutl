@@ -69,11 +69,13 @@ sub close_ranges{
 }
 sub sample{
     set_ln();
-    my @lineno;
-    for(my $i=0; $i< $opts{s}; $i++){
-        push @lineno, int(rand($ln));
+    my %lineno;
+    $opts{s} = $ln if $ln <$opts{s};
+    $opts{z} =1;
+    while( scalar(%lineno)  < $opts{s}){
+        $lineno{ int(rand($ln)) }++;
     }
-    $opts{l}= join(',', sort {$a<=>$b} @lineno);
+    $opts{l}= join(',', sort {$a<=>$b} keys %lineno);
     try_quick();
 }
 sub one2zero{
