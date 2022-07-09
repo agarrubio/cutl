@@ -5,14 +5,15 @@ use List::Util qw(min max);
 use Getopt::Std;
 
 my(%opts,$tmp,$ln,$is_sorted,$min_line,$max_line);
-getopts("hbzvl:f:s:", \%opts) or help();
+getopts("hbzvl:f:s:S:", \%opts) or help();
 $opts{h} && help();
 if( -t STDIN and not @ARGV) {help()};
 
 # ======================  main =======================
 
-$opts{f}  && read_list(); # fills $opts{l} from file $opts{f};
-$opts{s}  && sample();    # Sample lines. Does not return.
+$opts{f}  && read_list();       # fills $opts{l} from file $opts{f};
+$opts{s}  && sample();          # Sample increasing lines. Does not return.
+$opts{S}  && sample_unsorted(); # Sample lines in random order. Does not return.
 $opts{l} || help();
 
 close_ranges();  # Clean list and closes open ranges,takes care of $opts{z}
@@ -67,17 +68,38 @@ sub close_ranges{
     
     print STDERR "list is $opts{l}\n" if $opts{b};
 }
+
+sub sample_unsorted{
+    set_ln();
+    my @lineno;
+    for(my $i=0; $i< $opts{S}; $i++){
+        push @lineno, int(rand($ln));
+    }
+    # numbers in %lineno start from zero
+    $opts{z} =1;
+    
+    $opts{l}= join(',', @lineno);
+    parse_list();
+    do_unsorted();
+   
+}
 sub sample{
+    # Random lines
     set_ln();
     my %lineno;
+    # The number of samples cannot be more than the number of lines in file
     $opts{s} = $ln if $ln <$opts{s};
-    $opts{z} =1;
     while( scalar(%lineno)  < $opts{s}){
         $lineno{ int(rand($ln)) }++;
     }
+    # numbers in %lineno start from zero
+    $opts{z} =1;
+    
+    # Sort numbers so that we can use the QUICK prcedure
     $opts{l}= join(',', sort {$a<=>$b} keys %lineno);
     try_quick();
 }
+
 sub one2zero{
     my $val=shift;
     $val == 0 && die "ERROR: line number == 0 while counting from one (see option -z).\n";
@@ -204,6 +226,7 @@ sub do_sorted{
             $j++;
         }
     }
+    exit;
 }
 
 sub do_unsorted{
@@ -230,6 +253,7 @@ sub do_unsorted{
     foreach my $i ( eval $opts{l} ){
         print $lines[$i] if $i <= $#lines;
     }
+    exit;
 }
 
 sub parse_list{
@@ -254,6 +278,8 @@ sub parse_list{
 }
 
 sub set_ln{
+    # Maybe $ln is already set
+    $ln && return;
     # if data comes from STDIN, save it to file $tmp, and set it as $ARGV[0]
     unless( @ARGV ){
         $tmp="/var/tmp/stdin.$$";
@@ -294,24 +320,25 @@ die <<'ayuda';
 cut lines from file as specified in list.
 
 -h         This help
--l   list  Comma separated list of numbers.
+-l  list   Comma separated list of numbers and ranges.
              Negative numbers count from end of file: -5,-1
              Ranges are defined with two dots: '2..8' 
              Negatives are valid in ranges: '-10..8'
-             A missing left value, implies 0 (first line of file)
-             A missing right value, implies -1 (last line of file)
-               ',..3' => ',0..3' and  '5..,' => '5..-1,'
-             Thus -l..4 is like "head -5" and -l-4.. is like "tail -n4"
+             A missing left value, implies first line of file (1, or 0 if -z)
+             A missing right value, implies last line of file (-1)
+               ',..3' => ',1..3' and  '5..,' => '5..-1,'
+             Thus -l..5 is like "head -5" and -l-4.. is like "tail -n4"
+-f  file   Read list from file (list of numbers and ranges)
+             Comma, whitespace and newlines are treated as commas.
 -v         Negate the list. Report lines NOT in list.
              Requires line numbers to be in strict ascending order.
--f  file   Read list from file (comma separated list of numbers)
-             Whitespace (including newlines) are treated as commas.
 -z         Count lines from zero. Default is count from 1.
--s  n      Sample n random lines. Note: Slow with large files
+-s  n      Sample n random lines in increasing order. No repetition.
+-S  n      Sample n random lines unsorted. Lines may be repeated.
 -b         Print some debugging information
 
 Note on efficiency: 
-Mainly, don't worry: modern computers are very fast!
+Mostly, don't worry: modern computers are very fast!
 However, in the worst case, lines are read into an array. For very large
   files, this can be slow and consume much RAM.
 These conditions might (or not) decrease efficiency:
