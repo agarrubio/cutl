@@ -11,7 +11,7 @@ alias cutl=cut_lines.pl
 ```
 or
 ```
-alias cutl="cut_lines.pl -z"  To count lines from zero, instead of one
+alias cutl="cut_lines.pl -z"  To count lines from zero, instead of one.
 ```
 ## Usage
 **cutl** has a short help (`cutl -h`). This would be a simple use example:
