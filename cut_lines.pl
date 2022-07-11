@@ -14,7 +14,7 @@ if( -t STDIN and not @ARGV) {help()};
 $opts{f}  && read_list();       # fills $opts{l} from file $opts{f};
 $opts{s}  && sample();          # Sample increasing lines. Does not return.
 $opts{S}  && sample_unsorted(); # Sample lines in random order. Does not return.
-$opts{l} || help();
+defined $opts{l} || help();
 
 close_ranges();  # Clean list and closes open ranges,takes care of $opts{z}
 
@@ -38,7 +38,11 @@ if( ! $is_sorted ){
 # ======================  subs =======================
 sub close_ranges{
     @ARGV<=1 or die "ERROR: use at most one file as argument.\n"; # TOO MANY FILES
-
+    
+    if( $ARGV[0] ){
+        -s $ARGV[0] or die "ERROR: invalid file: $ARGV[0]n";
+    }
+    
     # remove spaces
     $opts{l}=~s/\s+//g; 
     
