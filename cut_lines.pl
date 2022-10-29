@@ -1,4 +1,4 @@
-#!env perl
+#!/bin/env perl
 use strict;
 use warnings;
 use List::Util qw(min max);
